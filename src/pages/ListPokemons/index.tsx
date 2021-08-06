@@ -6,7 +6,8 @@ import {
   View, 
   FlatList,
   TouchableOpacity,
-  Image 
+  Image,
+  ActivityIndicator
 } from 'react-native';
 import { api } from '../../services/api';
 
@@ -14,6 +15,7 @@ import logo from '../../assets/pokeball.png';
 
 import styles from './styles'
 import { StackActions, useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 interface Pokemon {
   name: string;
@@ -22,6 +24,8 @@ interface Pokemon {
 
 export function ListPokemons() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [nextPage, setNextPage] = useState<String>();
   const { dispatch } = useNavigation();
 
   useEffect(() => {
@@ -30,13 +34,36 @@ export function ListPokemons() {
         const res = await api.get('/')
         
         setPokemons(res.data.results);
-      } catch {
-        return
+        setNextPage(res.data.next)
+        console.log(res.data.next);
+      } catch (e) {
+        console.log(e);
       }
     }
 
     getPokemons();
   }, []);
+
+  async function fetchPokemons(){
+    if(nextPage){
+      const { data } = await axios.get(String(nextPage));
+      
+      setPokemons(old => [...old, ...data.results])
+      setNextPage(data.next)
+    } else {
+      setNextPage(undefined)
+    }
+    setLoadingMore(false);
+  };
+
+  function handleFetchMore(distance: number) {
+    if(distance < 1){
+      return;
+    }
+
+    setLoadingMore(true);
+    fetchPokemons();
+  }
 
   function handleNavigateToPokemonInfo(url: string) {
     const navigateAction = StackActions.push('Details', {url});
@@ -71,6 +98,11 @@ export function ListPokemons() {
             </View>
           </TouchableOpacity>
         )}
+        onEndReachedThreshold={0.1}
+        onEndReached={({ distanceFromEnd }) => handleFetchMore(distanceFromEnd)}
+        ListFooterComponent={
+          loadingMore ? <ActivityIndicator style={{marginTop: 40}} color="#999" /> : <></>
+        }
       />
     </View>
   )
