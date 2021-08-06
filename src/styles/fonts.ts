@@ -1,5 +1,5 @@
 export const fonts = {
-  heading: 'PressStart2P_400Regular',
-  body: 'Poppins_400Regular',
-  bodyBold: 'Poppins_700Bold',
+  heading: 'PressStart2P-Regular',
+  body: 'Poppins-Regular',
+  bodyBold: 'Poppins-Bold',
 }

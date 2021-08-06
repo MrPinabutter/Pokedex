@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { colors } from '../../styles/colors';
+import { fonts } from '../../styles/fonts';
 
 const styles = StyleSheet.create({
   container: {
@@ -19,9 +20,9 @@ const styles = StyleSheet.create({
   },
 
   headerText: {
-    fontSize: 48,
-    fontWeight: 'bold',
+    fontSize: 28,
     color: colors.white,
+    fontFamily: fonts.heading,
   },
 
   image: {
@@ -56,7 +57,8 @@ const styles = StyleSheet.create({
 
   name: {
     color: colors.headging,
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: fonts.body,
   },
 
   scroll: {

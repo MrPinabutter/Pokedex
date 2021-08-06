@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Text, View, StyleSheet, Alert, Image } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { colors } from '../../styles/colors';
+import { fonts } from '../../styles/fonts';
 
 type PokemonProps = {
   Pokemon: {
@@ -91,13 +92,14 @@ const styles = StyleSheet.create({
 
   headerTextName: {
     color: colors.white,
-    fontWeight: 'bold',
-    fontSize: 48
+    fontFamily: fonts.heading,
+    fontSize: 32
   },
-
+  
   headerTextId: {
-    color: colors.white,
-    fontSize: 26
+    color: colors.gray,
+    fontFamily: fonts.heading,
+    fontSize: 18
   },
 
   infoCard: {
@@ -117,16 +119,16 @@ const styles = StyleSheet.create({
     width: '80%',
     textAlign: 'center',
     color: colors.white,
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginTop: 20
+    fontSize: 24,
+    marginTop: 20,
+    fontFamily: fonts.heading
   },
 
   infoText: {
     width: '80%',
     color: colors.headging,
     fontSize: 18,
-    fontWeight: 'bold'
+    fontFamily: fonts.bodyBold
   }
 
 })
