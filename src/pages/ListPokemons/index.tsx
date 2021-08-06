@@ -35,7 +35,6 @@ export function ListPokemons() {
         
         setPokemons(res.data.results);
         setNextPage(res.data.next)
-        console.log(res.data.next);
       } catch (e) {
         console.log(e);
       }
@@ -45,8 +44,11 @@ export function ListPokemons() {
   }, []);
 
   async function fetchPokemons(){
+    const nextPageAux = nextPage;
+    setNextPage(undefined);
+
     if(nextPage){
-      const { data } = await axios.get(String(nextPage));
+      const { data } = await axios.get(String(nextPageAux));
       
       setPokemons(old => [...old, ...data.results])
       setNextPage(data.next)
@@ -98,7 +100,7 @@ export function ListPokemons() {
             </View>
           </TouchableOpacity>
         )}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.1 }
         onEndReached={({ distanceFromEnd }) => handleFetchMore(distanceFromEnd)}
         ListFooterComponent={
           loadingMore ? <ActivityIndicator style={{marginTop: 40}} color="#999" /> : <></>
